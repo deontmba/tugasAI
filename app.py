@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide" 
 )
 
-st.title("🎨 Ekstraktor Warna Dominan dari Gambar yang di Upload")
+st.title(" Ekstraktor Warna Dominan dari Gambar yang di Upload")
 st.write("Nama : Gideon Tamba")
 st.write("NPM  : 140810230082")
 st.markdown("**Petunjuk penggunaan:** unggah sebuah gambar untuk mendapatkan palet warna dengan **lima warna paling dominan**.")
