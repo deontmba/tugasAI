@@ -8,7 +8,7 @@ import matplotlib.colors as mcolors
 st.set_page_config(
     page_title="Ekstraktor Warna Dominan",
     page_icon="🎨",
-    layout="centered" 
+    layout="wide" 
 )
 
 st.title("🎨 Ekstraktor Warna Dominan dari Gambar yang di Upload")
