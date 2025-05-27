@@ -5,3 +5,4 @@ numpy
 Pillow
 matplotlib
 requests
+webcolors==1.13
