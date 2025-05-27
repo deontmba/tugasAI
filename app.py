@@ -15,29 +15,47 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #E0FFFF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
-        /* Pastikan warna teks di bawah ini kontras dengan warna background di atas */
+        background-color: #E0FFFF; /* Latar belakang hijau muda (LightCyan) */
     }
 
     /* Mengubah warna teks untuk judul (h1) */
     h1 {
-        color: #2F4F4F; /* Dark Slate Gray - warna gelap yang kontras */
+        color: #1A1A1A; /* Hampir hitam - sangat kontras dengan latar belakang terang */
     }
 
     /* Mengubah warna teks untuk konten markdown (termasuk deskripsi di bawah judul) */
-    .stMarkdown {
-        color: #4682B4; /* Steel Blue - warna gelap lain yang kontras */
+    /* st.write() juga akan mengambil warna ini jika tidak ada style lain yang menimpanya */
+    .stMarkdown, .css-1jc7clc.e16fv1qc0, .css-1aumxm5.e16fv1qc0 { /* Menargetkan st.markdown dan juga st.write */
+        color: #333333; /* Abu-abu gelap - kontras dengan latar belakang terang */
     }
 
-    /* Opsi: Ubah warna teks default untuk seluruh body jika diperlukan */
-    /*
-    body {
-        color: #333333; /* Dark grey */
-    }
+    /* Ini adalah perbaikan spesifik untuk elemen yang dibuat oleh st.write()
+       Streamlit seringkali menggunakan kelas CSS yang dinamis.
+       Kelas-kelas seperti css-1jc7clc dan css-1aumxm5 adalah contohnya.
+       Menambahkan ini mungkin membantu menargetkan st.write() secara lebih luas.
+       Namun, cara terbaik untuk st.write() adalah dengan menyematkannya di st.markdown
+       jika ingin mengontrol gayanya dengan CSS.
+       Untuk teks Nama dan NPM, st.write() tidak secara langsung memakai .stMarkdown.
+       Kita bisa menargetkan kontainer umum.
     */
+    p { /* Menargetkan elemen paragraf umum, yang sering digunakan oleh st.write() */
+        color: #333333; /* Abu-abu gelap untuk teks paragraf biasa */
+    }
+
+
+    /* Opsi: Ubah warna teks default untuk seluruh body jika diperlukan (ini menargetkan paling luas) */
+    body {
+        color: #333333; /* Warna teks default untuk seluruh body */
+    }
+
+    /* Jika Anda ingin teks di dalam kotak uploader juga gelap */
+    .stFileUploader span {
+        color: #333333 !important; /* !important untuk memastikan override style default Streamlit */
+    }
+
     </style>
     """,
-    unsafe_allow_html=True # Ini harus True agar CSS bisa dirender
+    unsafe_allow_html=True
 )
 
 st.title("💐 Ekstraktor Warna Dominan dari Gambar yang di Upload")
