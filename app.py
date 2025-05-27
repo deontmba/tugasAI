@@ -1,118 +1,93 @@
 import streamlit as st
-import cv2
+from PIL import Image
 import numpy as np
 from sklearn.cluster import KMeans
-from collections import Counter
-import webcolors
 import matplotlib.pyplot as plt
-from PIL import Image
+import matplotlib.colors as mcolors
 
-st.set_page_config(page_title="Color Picker dari Gambar", page_icon="🎨", layout="wide")
+# Konfigurasi halaman Streamlit
+st.set_page_config(
+    page_title="Ekstraktor Warna Dominan",
+    page_icon="🎨",
+    layout="centered" # Tata letak konten di tengah halaman
+)
 
-def rgb_to_hex(rgb_color):
-    hex_color = "#"
-    for i in rgb_color:
-        i = int(i)
-        hex_color += ("{:02x}".format(i))
-    return hex_color.upper()
+st.title("🎨 Ekstraktor Warna Dominan dari Gambar")
+st.markdown("Unggah sebuah gambar untuk mendapatkan palet warna dengan **lima warna paling dominan**.")
 
-def prep_image(raw_img):
-    # Konversi PIL Image ke numpy array
-    img = np.array(raw_img)
-    
-    # Jika gambar memiliki alpha channel (RGBA), ambil hanya RGB saja
-    if img.shape[2] == 4:
-        img = img[:, :, :3]
-    
-    # Resize gambar
-    modified_img = cv2.resize(img, (600, 400), interpolation=cv2.INTER_AREA)
-    
-    # Ubah bentuk menjadi 2D array (pixels x RGB)
-    # Periksa dulu apakah modified_img memiliki 3 channel
-    if len(modified_img.shape) == 3 and modified_img.shape[2] == 3:
-        modified_img = modified_img.reshape(-1, 3)
-    else:
-        st.error("Format gambar tidak didukung. Pastikan gambar berformat RGB.")
-        return None
-    
-    return modified_img
-
-def color_analysis(img, k=5):
-    clf = KMeans(n_clusters=k)
-    color_labels = clf.fit_predict(img)
-    center_colors = clf.cluster_centers_
-    counts = Counter(color_labels)
-    ordered_colors = [center_colors[i] for i in counts.keys()]
-    hex_colors = [rgb_to_hex(ordered_colors[i]) for i in counts.keys()]
-    rgb_colors = [ordered_colors[i] for i in counts.keys()]
-    
-    # Sort colors by frequency
-    sorted_counts = sorted(counts.items(), key=lambda x: x[1], reverse=True)
-    sorted_hex = [hex_colors[i[0]] for i in sorted_counts]
-    sorted_rgb = [rgb_colors[i[0]] for i in sorted_counts]
-    
-    return sorted_hex, sorted_rgb
-
-def closest_color(requested_color):
-    min_colors = {}
-    for key, name in webcolors.CSS3_HEX_TO_NAMES.items():
-        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
-        rd = (r_c - requested_color[0]) ** 2
-        gd = (g_c - requested_color[1]) ** 2
-        bd = (b_c - requested_color[2]) ** 2
-        min_colors[(rd + gd + bd)] = name
-    return min_colors[min(min_colors.keys())]
-
-def get_color_name(rgb_color):
-    try:
-        color_name = webcolors.rgb_to_name(rgb_color)
-    except ValueError:
-        color_name = closest_color(rgb_color)
-    return color_name
-
-# UI
-st.title("🎨 Color Picker dari Gambar")
-st.markdown("Unggah gambar dan dapatkan 5 warna dominan darinya!")
-
-uploaded_file = st.file_uploader("Pilih gambar...", type=["jpg", "jpeg", "png"])
+# --- Bagian Pengunggah File ---
+uploaded_file = st.file_uploader("Pilih sebuah gambar...", type=["jpg", "jpeg", "png", "webp"])
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Gambar yang diunggah", use_column_width=True)
-    
-    with st.spinner("Menganalisis warna..."):
-        modified_image = prep_image(image)
-        hex_colors, rgb_colors = color_analysis(modified_image)
-        
-        st.subheader("5 Warna Dominan")
-        cols = st.columns(5)
-        
-        color_names = []
-        for i in range(5):
-            with cols[i]:
-                st.markdown(f'<div style="background-color:{hex_colors[i]}; height:100px; border-radius:10px;"></div>', unsafe_allow_html=True)
-                st.code(hex_colors[i])
-                color_name = get_color_name((int(rgb_colors[i][0]), int(rgb_colors[i][1]), int(rgb_colors[i][2])))
-                color_names.append(color_name)
-                st.write(color_name.capitalize())
-        
-        # Show color palette
-        fig, ax = plt.subplots(figsize=(10, 2))
-        for i, color in enumerate(hex_colors[:5]):
-            ax.add_patch(plt.Rectangle((i/5, 0), 1/5, 1, color=np.array(rgb_colors[i])/255))
-        ax.set_xticks([])
-        ax.set_yticks([])
-        st.pyplot(fig)
-        
-        # Show color frequencies
-        st.subheader("Distribusi Warna")
-        fig2, ax2 = plt.subplots()
-        ax2.bar(range(5), [count[1] for count in sorted(Counter(color_labels).items(), key=lambda x: x[1], reverse=True)[:5]], 
-                color=[np.array(c)/255 for c in rgb_colors[:5]])
-        ax2.set_xticks(range(5))
-        ax2.set_xticklabels(color_names[:5], rotation=45)
-        ax2.set_ylabel("Frekuensi")
-        st.pyplot(fig2)
+    # Menampilkan gambar yang diunggah
+    st.image(uploaded_file, caption="Gambar yang Diunggah", use_column_width=True)
+    st.write("---") # Garis pemisah
+    st.write("Menganalisis warna dominan, harap tunggu...")
+
+    try:
+        # Buka gambar menggunakan Pillow
+        img = Image.open(uploaded_file)
+        # Pastikan gambar dalam format RGB
+        img = img.convert("RGB")
+
+        # Mengubah ukuran gambar untuk pemrosesan yang lebih cepat (opsional)
+        # Max dimensi 200 piksel, menjaga rasio aspek
+        img.thumbnail((200, 200))
+
+        # Konversi gambar ke array NumPy
+        # Meratakan gambar menjadi array 2D piksel (tinggi*lebar, 3)
+        img_array = np.array(img).reshape(-1, 3)
+
+        # --- K-Means Clustering untuk menemukan warna dominan ---
+        n_colors = 5 # Kita ingin 5 warna dominan
+        # Gunakan n_init='auto' atau nilai integer yang sesuai.
+        # 'auto' adalah default di scikit-learn >= 1.2
+        # Jika Anda menggunakan versi lama, gunakan n_init=10
+        kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init='auto') # Atau n_init=10 untuk versi lama
+        kmeans.fit(img_array)
+
+        # Dapatkan pusat cluster (warna dominan)
+        dominant_colors_rgb = kmeans.cluster_centers_.astype(int)
+
+        # --- Menampilkan Palet Warna ---
+        st.subheader("Palet Warna Dominan")
+
+        # Buat figure dan axes untuk palet warna menggunakan Matplotlib
+        # Ukuran figure disesuaikan dengan jumlah warna
+        fig, ax = plt.subplots(1, n_colors, figsize=(n_colors * 1.5, 3))
+        # Mengatur warna latar belakang figure agar cocok dengan Streamlit
+        fig.set_facecolor("#f0f2f6") # Warna latar belakang Streamlit
+
+        for i, color_rgb in enumerate(dominant_colors_rgb):
+            # Konversi RGB ke Hex
+            hex_color = '#%02x%02x%02x' % tuple(color_rgb)
+            rgb_string = f"({color_rgb[0]}, {color_rgb[1]}, {color_rgb[2]})"
+
+            # Menambahkan persegi untuk menampilkan warna
+            ax[i].add_patch(plt.Rectangle((0, 0), 1, 1, color=hex_color))
+            # Menambahkan teks Hex di bawah warna
+            ax[i].text(0.5, -0.2, hex_color.upper(), ha='center', va='top', transform=ax[i].transAxes, fontsize=10, color='black')
+            # Menambahkan teks RGB di bawah Hex
+            ax[i].text(0.5, -0.4, rgb_string, ha='center', va='top', transform=ax[i].transAxes, fontsize=8, color='grey')
+            # Menyembunyikan sumbu
+            ax[i].axis('off')
+
+        plt.tight_layout() # Penyesuaian layout agar rapi
+        st.pyplot(fig) # Tampilkan plot Matplotlib di Streamlit
+
+        st.markdown("---")
+        st.markdown("##### Detail Warna:")
+        # Menampilkan warna dominan dengan nilai Hex dan RGB
+        for i, color_rgb in enumerate(dominant_colors_rgb):
+            hex_color = '#%02x%02x%02x' % tuple(color_rgb)
+            rgb_string = f"RGB: ({color_rgb[0]}, {color_rgb[1]}, {color_rgb[2]})"
+            # Menggunakan HTML untuk menampilkan kotak warna kecil
+            st.write(f"- <span style='background-color:{hex_color}; padding: 5px; border-radius: 3px;'>&nbsp;&nbsp;&nbsp;&nbsp;</span> **{hex_color.upper()}** ({rgb_string})", unsafe_allow_html=True)
+
+    except Exception as e:
+        # Penanganan kesalahan jika ada masalah dalam memproses gambar
+        st.error(f"Terjadi kesalahan saat memproses gambar: {e}")
+        st.info("Pastikan file yang diunggah adalah gambar yang valid (JPG, JPEG, PNG, atau WEBP).")
 
 st.markdown("---")
-st.markdown("**Tips:** Gunakan gambar dengan warna yang jelas untuk hasil terbaik!")
+st.markdown("Dibuat dengan ❤️ menggunakan [Streamlit](https://streamlit.io/)")
