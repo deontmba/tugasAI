@@ -15,7 +15,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #E0FFFF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
+        background-color: #F0F8FF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
         /* Anda bisa menggunakan kode hex, nama warna CSS, atau rgb() */
         /* Contoh lain:
         background-color: lightblue;
