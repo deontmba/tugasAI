@@ -20,7 +20,8 @@ uploaded_file = st.file_uploader("Pilih sebuah gambar...", type=["jpg", "jpeg", 
 
 if uploaded_file is not None:
     # Menampilkan gambar yang diunggah
-    st.image(uploaded_file, caption="Gambar yang Diunggah", use_column_width=True)
+    # Perubahan di sini: use_column_width diganti dengan use_container_width
+    st.image(uploaded_file, caption="Gambar yang Diunggah", use_container_width=True)
     st.write("---") # Garis pemisah
     st.write("Menganalisis warna dominan, harap tunggu...")
 
@@ -40,10 +41,7 @@ if uploaded_file is not None:
 
         # --- K-Means Clustering untuk menemukan warna dominan ---
         n_colors = 5 # Kita ingin 5 warna dominan
-        # Gunakan n_init='auto' atau nilai integer yang sesuai.
-        # 'auto' adalah default di scikit-learn >= 1.2
-        # Jika Anda menggunakan versi lama, gunakan n_init=10
-        kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init='auto') # Atau n_init=10 untuk versi lama
+        kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init='auto')
         kmeans.fit(img_array)
 
         # Dapatkan pusat cluster (warna dominan)
