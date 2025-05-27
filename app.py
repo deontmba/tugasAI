@@ -11,6 +11,23 @@ st.set_page_config(
     layout="wide" 
 )
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #E0FFFF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
+        /* Anda bisa menggunakan kode hex, nama warna CSS, atau rgb() */
+        /* Contoh lain:
+        background-color: lightblue;
+        background-color: #F0F8FF; /* AliceBlue */
+        background-color: rgb(240, 255, 240); /* Honeydew */
+        */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True # Ini harus True agar CSS bisa dirender
+)
+
 st.title("💐 Ekstraktor Warna Dominan dari Gambar yang di Upload")
 st.write("Nama : Gideon Tamba")
 st.write("NPM  : 140810230082")
