@@ -66,3 +66,4 @@ if uploaded_file is not None:
         st.info("Pastikan file yang diunggah adalah gambar yang valid (JPG, JPEG, PNG, atau WEBP).")
 
 st.markdown("---")
+st.markdown("Dibuat dengan ❤️ menggunakan [Streamlit](https://streamlit.io/)")
