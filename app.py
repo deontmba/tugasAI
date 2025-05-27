@@ -12,8 +12,8 @@ st.set_page_config(
 )
 
 st.title("🎨 Ekstraktor Warna Dominan dari Gambar yang di Upload")
-st.markdown("**Petunjuk penggunaan:** unggah sebuah gambar untuk mendapatkan palet warna dengan **lima warna paling dominan**."
-            """
+st.markdown(
+    """
     <style>
     /* Menambahkan margin bawah pada elemen judul H1 */
     h1 {
@@ -27,7 +27,8 @@ st.markdown("**Petunjuk penggunaan:** unggah sebuah gambar untuk mendapatkan pal
     </style>
     """,
     unsafe_allow_html=True # Ini harus True agar HTML/CSS bisa dirender
-            )
+)
+
 
 uploaded_file = st.file_uploader("Pilih sebuah gambar...", type=["jpg", "jpeg", "png", "webp"])
 
