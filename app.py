@@ -21,6 +21,7 @@ st.markdown(
         padding-bottom: 2rem; /* Margin bawah konten */
         padding-left: 3rem;   /* Margin kiri konten */
         padding-right: 3rem;  /* Margin kanan konten */
+        background-color: E6E6FA; /* Memberikan background putih pada area konten utama */
         border-radius: 10px; /* Sedikit border-radius agar terlihat modern */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan halus */
     }
