@@ -11,6 +11,37 @@ st.set_page_config(
     layout="wide" 
 )
 
+st.markdown(
+    """
+    <style>
+    /* Mengubah warna teks untuk judul (h1) */
+    h1 {
+        color: #1A1A1A; /* Hampir hitam - sangat kontras dengan latar belakang terang */
+    }
+
+    /* Mengubah warna teks untuk konten markdown (termasuk deskripsi di bawah judul) */
+    .stMarkdown, p { /* Menargetkan st.markdown dan juga st.write */
+        color: #333333; /* Abu-abu gelap - kontras dengan latar belakang terang */
+    }
+
+    /* Jika Anda ingin teks di dalam kotak uploader juga gelap */
+    .stFileUploader span {
+        color: #333333 !important;
+    }
+
+    /* Pastikan teks hex dan RGB di bawah palet juga terbaca */
+    .figcaption { /* Menargetkan caption gambar */
+         color: #333333;
+    }
+
+    /* Teks hex dan RGB di bawah warna palet */
+    /* Perhatikan: ini adalah teks di dalam Matplotlib plot,
+       yang sudah diatur di kode Python (ax[i].text) */
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("💐 Ekstraktor Warna Dominan dari Gambar yang di Upload")
 st.write("Nama : Gideon Tamba")
 st.write("NPM  : 140810230082")

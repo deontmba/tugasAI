@@ -1,0 +1,6 @@
+[theme]
+base="light"             # Bisa "light" atau "dark". Penting!
+backgroundColor="#E6E6FA" # Kode hex untuk Lavender
+# secondaryBackgroundColor="" # Opsional: untuk sidebar atau widget tertentu
+# textColor="#333333"      # Opsional: jika ingin mengatur warna teks global
+# font="sans serif"        # Opsional: "sans serif", "serif", "monospace"
