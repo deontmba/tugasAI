@@ -5,63 +5,47 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
-# Konfigurasi halaman Streamlit
+
 st.set_page_config(
-    page_title="Ekstraktor Warna Dominan",
+    page_title="Color Picker",
     page_icon="🎨",
-    layout="centered" # Tata letak konten di tengah halaman
+    layout="centered"
 )
 
-st.title("🎨 Ekstraktor Warna Dominan dari Gambar")
-st.markdown("Unggah sebuah gambar untuk mendapatkan palet warna dengan **lima warna paling dominan**.")
+st.title("Color Picker")
+st.markdown("**Petunjuk pemakaian :** unggah gambar dan akan diperoleh palet warna dengan **lima warna paling dominan**.")
 
-# --- Bagian Pengunggah File ---
 uploaded_file = st.file_uploader("Pilih sebuah gambar...", type=["jpg", "jpeg", "png", "webp"])
 
 if uploaded_file is not None:
-    # Menampilkan gambar yang diunggah
-    # Perubahan di sini: use_column_width diganti dengan use_container_width
     st.image(uploaded_file, caption="Gambar yang Diunggah", use_container_width=True)
     st.write("---") # Garis pemisah
     st.write("Menganalisis warna dominan, harap tunggu...")
 
     try:
-        # Buka gambar menggunakan Pillow
+
         img = Image.open(uploaded_file)
-        # Pastikan gambar dalam format RGB
         img = img.convert("RGB")
 
-        # Mengubah ukuran gambar untuk pemrosesan yang lebih cepat (opsional)
-        # Max dimensi 200 piksel, menjaga rasio aspek
         img.thumbnail((200, 200))
 
-        # Konversi gambar ke array NumPy
-        # Meratakan gambar menjadi array 2D piksel (tinggi*lebar, 3)
         img_array = np.array(img).reshape(-1, 3)
 
-        # --- K-Means Clustering untuk menemukan warna dominan ---
-        n_colors = 5 # Kita ingin 5 warna dominan
+        n_colors = 5 
         kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init='auto')
         kmeans.fit(img_array)
 
-        # Dapatkan pusat cluster (warna dominan)
         dominant_colors_rgb = kmeans.cluster_centers_.astype(int)
 
-        # --- Menampilkan Palet Warna ---
         st.subheader("Palet Warna Dominan")
 
-        # Buat figure dan axes untuk palet warna menggunakan Matplotlib
-        # Ukuran figure disesuaikan dengan jumlah warna
         fig, ax = plt.subplots(1, n_colors, figsize=(n_colors * 1.5, 3))
-        # Mengatur warna latar belakang figure agar cocok dengan Streamlit
-        fig.set_facecolor("#f0f2f6") # Warna latar belakang Streamlit
+        fig.set_facecolor("#f0f2f6") =
 
         for i, color_rgb in enumerate(dominant_colors_rgb):
-            # Konversi RGB ke Hex
             hex_color = '#%02x%02x%02x' % tuple(color_rgb)
             rgb_string = f"({color_rgb[0]}, {color_rgb[1]}, {color_rgb[2]})"
 
-            # Menambahkan persegi untuk menampilkan warna
             ax[i].add_patch(plt.Rectangle((0, 0), 1, 1, color=hex_color))
             # Menambahkan teks Hex di bawah warna
             ax[i].text(0.5, -0.2, hex_color.upper(), ha='center', va='top', transform=ax[i].transAxes, fontsize=10, color='black')
@@ -88,4 +72,3 @@ if uploaded_file is not None:
         st.info("Pastikan file yang diunggah adalah gambar yang valid (JPG, JPEG, PNG, atau WEBP).")
 
 st.markdown("---")
-st.markdown("Dibuat dengan ❤️ menggunakan [Streamlit](https://streamlit.io/)")
