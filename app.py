@@ -11,6 +11,40 @@ st.set_page_config(
     layout="centered" 
 )
 
+st.markdown(
+    """
+    <style>
+    h1 {
+        color: #F0F8FF; /* AliceBlue - sangat terang, kontras dengan background gelap */
+    }
+    .stMarkdown, p {
+        color: #D3D3D3; /* LightGrey - terang dan kontras dengan background gelap */
+    }
+    .stFileUploader span {
+        color: #D3D3D3 !important; /* Pastikan terlihat di background gelap */
+    }
+    .stImage > img {
+        border-radius: 8px; /* Sudut membulat untuk gambar */
+    }
+     .main .block-container {
+        background-color: #255F38; /* Warna hijau gelap dari palet Anda */
+        /* border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan lebih gelap untuk background gelap */
+        /* padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    } 
+    h2 {
+        color: #ADD8E6; /* LightBlue - sedikit berbeda agar menonjol */
+    }
+    h5 {
+        color: #ADD8E6; /* LightBlue */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True 
+)
 
 st.title("💐 Ekstraktor Warna Dominan dari Gambar yang di Upload")
 st.write("Nama : Gideon Tamba")
