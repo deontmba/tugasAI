@@ -15,7 +15,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #E0FFFF; /* Latar belakang hijau muda (LightCyan) */
+        background-color: 18230F; /* Latar belakang hijau muda (LightCyan) */
     }
 
     /* Mengubah warna teks untuk judul (h1) */
