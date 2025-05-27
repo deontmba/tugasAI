@@ -15,14 +15,26 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #F0F8FF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
-        /* Anda bisa menggunakan kode hex, nama warna CSS, atau rgb() */
-        /* Contoh lain:
-        background-color: lightblue;
-        background-color: #F0F8FF; /* AliceBlue */
-        background-color: rgb(240, 255, 240); /* Honeydew */
-        */
+        background-color: #E0FFFF; /* Contoh: LightCyan. Ganti dengan warna pilihan Anda! */
+        /* Pastikan warna teks di bawah ini kontras dengan warna background di atas */
     }
+
+    /* Mengubah warna teks untuk judul (h1) */
+    h1 {
+        color: #2F4F4F; /* Dark Slate Gray - warna gelap yang kontras */
+    }
+
+    /* Mengubah warna teks untuk konten markdown (termasuk deskripsi di bawah judul) */
+    .stMarkdown {
+        color: #4682B4; /* Steel Blue - warna gelap lain yang kontras */
+    }
+
+    /* Opsi: Ubah warna teks default untuk seluruh body jika diperlukan */
+    /*
+    body {
+        color: #333333; /* Dark grey */
+    }
+    */
     </style>
     """,
     unsafe_allow_html=True # Ini harus True agar CSS bisa dirender
