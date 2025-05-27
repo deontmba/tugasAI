@@ -17,9 +17,24 @@ def rgb_to_hex(rgb_color):
     return hex_color.upper()
 
 def prep_image(raw_img):
+    # Konversi PIL Image ke numpy array
     img = np.array(raw_img)
+    
+    # Jika gambar memiliki alpha channel (RGBA), ambil hanya RGB saja
+    if img.shape[2] == 4:
+        img = img[:, :, :3]
+    
+    # Resize gambar
     modified_img = cv2.resize(img, (600, 400), interpolation=cv2.INTER_AREA)
-    modified_img = modified_img.reshape(modified_img.shape[0]*modified_img.shape[1], 3)
+    
+    # Ubah bentuk menjadi 2D array (pixels x RGB)
+    # Periksa dulu apakah modified_img memiliki 3 channel
+    if len(modified_img.shape) == 3 and modified_img.shape[2] == 3:
+        modified_img = modified_img.reshape(-1, 3)
+    else:
+        st.error("Format gambar tidak didukung. Pastikan gambar berformat RGB.")
+        return None
+    
     return modified_img
 
 def color_analysis(img, k=5):
