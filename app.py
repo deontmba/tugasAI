@@ -14,32 +14,56 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Mengubah warna teks untuk judul (h1) */
+    /* background-color untuk .stApp sudah diatur di .streamlit/config.toml, jadi dihapus di sini */
+
+    /* Warna teks untuk judul (h1) - bisa sama dengan textColor global atau lebih spesifik */
     h1 {
-        color: #1A1A1A; /* Hampir hitam - sangat kontras dengan latar belakang terang */
+        color: #F0F8FF; /* AliceBlue - sangat terang, kontras dengan background gelap */
     }
 
-    /* Mengubah warna teks untuk konten markdown (termasuk deskripsi di bawah judul) */
-    .stMarkdown, p { /* Menargetkan st.markdown dan juga st.write */
-        color: #333333; /* Abu-abu gelap - kontras dengan latar belakang terang */
+    /* Warna teks untuk konten markdown dan paragraf (st.write) */
+    .stMarkdown, p {
+        color: #D3D3D3; /* LightGrey - terang dan kontras dengan background gelap */
     }
 
-    /* Jika Anda ingin teks di dalam kotak uploader juga gelap */
+    /* Warna teks dalam kotak uploader */
     .stFileUploader span {
-        color: #333333 !important;
+        color: #D3D3D3 !important; /* Pastikan terlihat di background gelap */
     }
 
-    /* Pastikan teks hex dan RGB di bawah palet juga terbaca */
-    .figcaption { /* Menargetkan caption gambar */
-         color: #333333;
+    /* Mengatur style untuk caption gambar */
+    .stImage > img {
+        border-radius: 8px; /* Sudut membulat untuk gambar */
     }
 
-    /* Teks hex dan RGB di bawah warna palet */
-    /* Perhatikan: ini adalah teks di dalam Matplotlib plot,
-       yang sudah diatur di kode Python (ax[i].text) */
+    /* Latar belakang kotak konten utama (jika layout "centered") */
+    /* Untuk layout "wide", konten langsung mengisi lebar, jadi efek kotak ini kurang terlihat */
+    /* Jika Anda ingin kotak konten seperti sebelumnya, Anda bisa menambahkan ini lagi */
+    /* .main .block-container {
+        background-color: #255F38; /* Warna hijau gelap dari palet Anda */
+        /* border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan lebih gelap untuk background gelap */
+        /* padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    } */
+
+    /* Warna teks subheader */
+    h2 {
+        color: #ADD8E6; /* LightBlue - sedikit berbeda agar menonjol */
+    }
+
+    /* Warna teks detail warna (misalnya "Detail Warna:") */
+    h5 {
+        color: #ADD8E6; /* LightBlue */
+    }
+
+    /* Warna teks di bawah palet (hex dan RGB) */
+    /* Ini diatur di Matplotlib, jadi pastikan kode Python mengatur warnanya ke 'white' atau 'lightgrey' */
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True # Ini harus True agar CSS bisa dirender
 )
 
 st.title("💐 Ekstraktor Warna Dominan dari Gambar yang di Upload")

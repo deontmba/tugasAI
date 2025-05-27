@@ -1,6 +1,8 @@
+# File: .streamlit/config.toml
+
 [theme]
-base="light"             # Bisa "light" atau "dark". Penting!
-backgroundColor="#E6E6FA" # Kode hex untuk Lavender
-# secondaryBackgroundColor="" # Opsional: untuk sidebar atau widget tertentu
-# textColor="#333333"      # Opsional: jika ingin mengatur warna teks global
-# font="sans serif"        # Opsional: "sans serif", "serif", "monospace"
+base="dark"            
+backgroundColor="#18230F" 
+secondaryBackgroundColor="#27391C" 
+textColor="#FAFAFA"     
+font="sans serif"
