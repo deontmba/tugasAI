@@ -8,38 +8,25 @@ import matplotlib.colors as mcolors
 st.set_page_config(
     page_title="Ekstraktor Warna Dominan",
     page_icon="💐",
-    layout="wide" 
+    layout="centered" 
 )
 
 st.markdown(
     """
     <style>
-    /* background-color untuk .stApp sudah diatur di .streamlit/config.toml, jadi dihapus di sini */
-
-    /* Warna teks untuk judul (h1) - bisa sama dengan textColor global atau lebih spesifik */
     h1 {
         color: #F0F8FF; /* AliceBlue - sangat terang, kontras dengan background gelap */
     }
-
-    /* Warna teks untuk konten markdown dan paragraf (st.write) */
     .stMarkdown, p {
         color: #D3D3D3; /* LightGrey - terang dan kontras dengan background gelap */
     }
-
-    /* Warna teks dalam kotak uploader */
     .stFileUploader span {
         color: #D3D3D3 !important; /* Pastikan terlihat di background gelap */
     }
-
-    /* Mengatur style untuk caption gambar */
     .stImage > img {
         border-radius: 8px; /* Sudut membulat untuk gambar */
     }
-
-    /* Latar belakang kotak konten utama (jika layout "centered") */
-    /* Untuk layout "wide", konten langsung mengisi lebar, jadi efek kotak ini kurang terlihat */
-    /* Jika Anda ingin kotak konten seperti sebelumnya, Anda bisa menambahkan ini lagi */
-    /* .main .block-container {
+    .main .block-container {
         background-color: #255F38; /* Warna hijau gelap dari palet Anda */
         /* border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan lebih gelap untuk background gelap */
@@ -47,20 +34,13 @@ st.markdown(
         padding-bottom: 2rem;
         padding-left: 3rem;
         padding-right: 3rem;
-    } */
-
-    /* Warna teks subheader */
+    } 
     h2 {
         color: #ADD8E6; /* LightBlue - sedikit berbeda agar menonjol */
     }
-
-    /* Warna teks detail warna (misalnya "Detail Warna:") */
     h5 {
         color: #ADD8E6; /* LightBlue */
     }
-
-    /* Warna teks di bawah palet (hex dan RGB) */
-    /* Ini diatur di Matplotlib, jadi pastikan kode Python mengatur warnanya ke 'white' atau 'lightgrey' */
     </style>
     """,
     unsafe_allow_html=True # Ini harus True agar CSS bisa dirender
