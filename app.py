@@ -34,7 +34,7 @@ st.markdown(
 
     /* Mengubah warna background sidebar (jika Anda menambahkan sidebar nanti) */
     [data-testid="stSidebarContent"] {
-        background-color: #E6E6FA; /* Warna Lavender */
+        background-color: #000000; /* Warna Lavender */
     }
 
     /* Mengatur style untuk caption gambar */
@@ -44,12 +44,12 @@ st.markdown(
 
     /* Mengubah style untuk teks heading */
     h1, h2, h3, h4, h5, h6 {
-        color: #2F4F4F; /* Dark Slate Gray untuk judul */
+        color: #000000; /* Dark Slate Gray untuk judul */
     }
 
     /* Style untuk teks markdown */
     .stMarkdown {
-        color: #4682B4; /* Steel Blue untuk teks deskripsi */
+        color: #000000; /* Steel Blue untuk teks deskripsi */
     }
 
     /* Style untuk pesan sukses/info/error jika ada */
