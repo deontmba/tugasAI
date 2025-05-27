@@ -12,54 +12,7 @@ st.set_page_config(
 )
 
 st.title("🎨 Ekstraktor Warna Dominan dari Gambar yang di Upload")
-st.markdown(
-    """
-    <style>
-    /* Mengubah warna background seluruh aplikasi */
-    .stApp {
-        background-color: #F8F8FF; /* Warna dasar halaman: Spirit White */
-    }
-
-    /* Memberikan margin/padding pada konten utama (di dalam layout centered) */
-    /* Menargetkan kontainer utama dari layout "centered" atau "wide" */
-    .main .block-container {
-        padding-top: 2rem;    /* Margin atas konten */
-        padding-bottom: 2rem; /* Margin bawah konten */
-        padding-left: 3rem;   /* Margin kiri konten */
-        padding-right: 3rem;  /* Margin kanan konten */
-        background-color: white; /* Memberikan background putih pada area konten utama */
-        border-radius: 10px; /* Sedikit border-radius agar terlihat modern */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan halus */
-    }
-
-    /* Mengubah warna background sidebar (jika Anda menambahkan sidebar nanti) */
-    [data-testid="stSidebarContent"] {
-        background-color: #000000; /* Warna Lavender */
-    }
-
-    /* Mengatur style untuk caption gambar */
-    .stImage > img {
-        border-radius: 8px; /* Sudut membulat untuk gambar */
-    }
-
-    /* Mengubah style untuk teks heading */
-    h1, h2, h3, h4, h5, h6 {
-        color: #000000; /* Dark Slate Gray untuk judul */
-    }
-
-    /* Style untuk teks markdown */
-    .stMarkdown {
-        color: #000000; /* Steel Blue untuk teks deskripsi */
-    }
-
-    /* Style untuk pesan sukses/info/error jika ada */
-    .stAlert {
-        border-radius: 8px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True # Ini harus True agar HTML/CSS bisa dirender
-)
+st.markdown("**Petunjuk penggunaan:** unggah sebuah gambar untuk mendapatkan palet warna dengan **lima warna paling dominan**.")
 
 uploaded_file = st.file_uploader("Pilih sebuah gambar...", type=["jpg", "jpeg", "png", "webp"])
 
